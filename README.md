@@ -31,3 +31,22 @@ Tüm ikon/açılış görselleri `design/generate.py` ile SVG'den üretilir (ren
 python3 design/generate.py   # Pillow ve Chromium gerekir
 ```
 ![Önizleme](design/preview.png)
+
+## Mağaza ekran görüntüleri
+Hazır görseller `store/screenshots/` altında (İngilizce `en`, Türkçe `tr`):
+
+| Klasör | Boyut | Nereye |
+|---|---|---|
+| `ios-6.9/` | 1320×2868 | App Store – iPhone 6,9" |
+| `ipad-13/` | 2064×2752 | App Store – iPad 13" |
+| `android-phone/` | 1080×1920 | Google Play – telefon |
+| `google-play-feature/` | 1024×500 | Google Play – öne çıkan görsel |
+
+Yeniden üretmek için (uygulamadaki gerçek ekranlar yakalanır):
+```bash
+npx expo export --platform web --output-dir /tmp/web
+npx http-server /tmp/web -p 8765 -s &
+node store/capture.mjs /tmp/raw     # ekranları yakalar
+node store/compose.mjs /tmp/raw     # başlık + cihaz çerçevesiyle birleştirir
+```
+Başlık metinleri `store/compose.mjs` içindeki `COPY` bölümünden değiştirilebilir.

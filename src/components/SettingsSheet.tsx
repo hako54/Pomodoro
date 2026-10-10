@@ -55,60 +55,66 @@ export function SettingsSheet({ visible, settings, accent, onChange, onClose }: 
   const set = (patch: Partial<Settings>) => onChange({ ...settings, ...patch });
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
-      <Pressable style={styles.backdrop} onPress={onClose} />
-      <View style={styles.sheet}>
-        <Text style={styles.title}>{t('settings')}</Text>
-        <Stepper
-          label={t('focus')}
-          value={settings.focusMinutes}
-          unit={t('minutes')}
-          min={1}
-          max={90}
-          onChange={(v) => set({ focusMinutes: v })}
-        />
-        <Stepper
-          label={t('shortBreak')}
-          value={settings.shortBreakMinutes}
-          unit={t('minutes')}
-          min={1}
-          max={30}
-          onChange={(v) => set({ shortBreakMinutes: v })}
-        />
-        <Stepper
-          label={t('longBreak')}
-          value={settings.longBreakMinutes}
-          unit={t('minutes')}
-          min={1}
-          max={60}
-          onChange={(v) => set({ longBreakMinutes: v })}
-        />
-        <Stepper
-          label={t('longBreakEvery')}
-          value={settings.longBreakInterval}
-          unit={t('sessions')}
-          min={2}
-          max={8}
-          onChange={(v) => set({ longBreakInterval: v })}
-        />
-        <View style={styles.row}>
-          <Text style={styles.label}>{t('autoStart')}</Text>
-          <Switch
-            value={settings.autoStart}
-            onValueChange={(v) => set({ autoStart: v })}
-            trackColor={{ true: accent }}
+      <View style={styles.root}>
+        <Pressable style={styles.backdrop} onPress={onClose} />
+        <View style={styles.sheet}>
+          <Text style={styles.title}>{t('settings')}</Text>
+          <Stepper
+            label={t('focus')}
+            value={settings.focusMinutes}
+            unit={t('minutes')}
+            min={1}
+            max={90}
+            onChange={(v) => set({ focusMinutes: v })}
           />
+          <Stepper
+            label={t('shortBreak')}
+            value={settings.shortBreakMinutes}
+            unit={t('minutes')}
+            min={1}
+            max={30}
+            onChange={(v) => set({ shortBreakMinutes: v })}
+          />
+          <Stepper
+            label={t('longBreak')}
+            value={settings.longBreakMinutes}
+            unit={t('minutes')}
+            min={1}
+            max={60}
+            onChange={(v) => set({ longBreakMinutes: v })}
+          />
+          <Stepper
+            label={t('longBreakEvery')}
+            value={settings.longBreakInterval}
+            unit={t('sessions')}
+            min={2}
+            max={8}
+            onChange={(v) => set({ longBreakInterval: v })}
+          />
+          <View style={styles.row}>
+            <Text style={styles.label}>{t('autoStart')}</Text>
+            <Switch
+              value={settings.autoStart}
+              onValueChange={(v) => set({ autoStart: v })}
+              trackColor={{ true: accent }}
+            />
+          </View>
+          <Pressable style={[styles.doneBtn, { backgroundColor: accent }]} onPress={onClose}>
+            <Text style={styles.doneText}>{t('done')}</Text>
+          </Pressable>
         </View>
-        <Pressable style={[styles.doneBtn, { backgroundColor: accent }]} onPress={onClose}>
-          <Text style={styles.doneText}>{t('done')}</Text>
-        </Pressable>
       </View>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  backdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.4)' },
+  root: { flex: 1, justifyContent: 'flex-end' },
+  backdrop: { position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, backgroundColor: 'rgba(0,0,0,0.4)' },
   sheet: {
+    width: '100%',
+    maxWidth: 640,
+    alignSelf: 'center',
     backgroundColor: '#fff',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,

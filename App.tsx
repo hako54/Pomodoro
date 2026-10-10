@@ -36,8 +36,10 @@ function KeepAwake() {
 function PomodoroScreen() {
   const p = usePomodoro();
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const { width } = useWindowDimensions();
-  const ringSize = Math.min(width - 64, 320);
+  const { width, height } = useWindowDimensions();
+  // Scale the whole layout up on tablets so it doesn't float tiny in the middle.
+  const k = Math.min(Math.max(Math.min(width / 393, height / 852), 1), 1.8);
+  const ringSize = Math.min(width - 64, 320 * k);
   const color = COLORS[p.mode];
 
   useEffect(() => {
@@ -52,9 +54,9 @@ function PomodoroScreen() {
       {p.running && <KeepAwake />}
 
       <View style={styles.header}>
-        <Text style={styles.brand}>🍅 Pomodoro</Text>
+        <Text style={[styles.brand, { fontSize: 22 * k }]}>🍅 Pomodoro</Text>
         <Pressable accessibilityLabel={t('settings')} hitSlop={12} onPress={() => setSettingsOpen(true)}>
-          <Text style={styles.icon}>⚙︎</Text>
+          <Text style={[styles.icon, { fontSize: 28 * k }]}>⚙︎</Text>
         </Pressable>
       </View>
 
@@ -63,9 +65,13 @@ function PomodoroScreen() {
           <Pressable
             key={m.key}
             onPress={() => p.selectMode(m.key)}
-            style={[styles.tab, p.mode === m.key && styles.tabActive]}
+            style={[
+              styles.tab,
+              { paddingVertical: 8 * k, paddingHorizontal: 12 * k },
+              p.mode === m.key && styles.tabActive,
+            ]}
           >
-            <Text style={styles.tabText} numberOfLines={1}>
+            <Text style={[styles.tabText, { fontSize: 14 * k }]} numberOfLines={1}>
               {m.label}
             </Text>
           </Pressable>
@@ -80,7 +86,7 @@ function PomodoroScreen() {
           color="#fff"
           track="rgba(255,255,255,0.25)"
         />
-        <Text style={styles.time} accessibilityRole="timer">
+        <Text style={[styles.time, { fontSize: 72 * k }]} accessibilityRole="timer">
           {formatTime(p.remaining)}
         </Text>
         <View style={styles.dots}>
@@ -90,19 +96,26 @@ function PomodoroScreen() {
         </View>
       </View>
 
-      <Pressable onPress={p.toggle} style={({ pressed }) => [styles.mainBtn, pressed && { opacity: 0.85 }]}>
-        <Text style={[styles.mainBtnText, { color }]}>{startLabel}</Text>
+      <Pressable
+        onPress={p.toggle}
+        style={({ pressed }) => [
+          styles.mainBtn,
+          { width: 220 * k, paddingVertical: 18 * k, borderRadius: 18 * k },
+          pressed && { opacity: 0.85 },
+        ]}
+      >
+        <Text style={[styles.mainBtnText, { color, fontSize: 22 * k }]}>{startLabel}</Text>
       </Pressable>
 
       <View style={styles.secondary}>
         <Pressable onPress={p.reset} hitSlop={12} accessibilityLabel="Reset">
-          <Text style={styles.icon}>↺</Text>
+          <Text style={[styles.icon, { fontSize: 28 * k }]}>↺</Text>
         </Pressable>
-        <Text style={styles.today}>
+        <Text style={[styles.today, { fontSize: 16 * k }]}>
           {t('today')}: {p.todayCount} 🍅
         </Text>
         <Pressable onPress={p.skip} hitSlop={12} accessibilityLabel="Skip">
-          <Text style={styles.icon}>⏭︎</Text>
+          <Text style={[styles.icon, { fontSize: 28 * k }]}>⏭︎</Text>
         </Pressable>
       </View>
 
