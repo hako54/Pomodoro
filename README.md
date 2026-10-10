@@ -14,16 +14,45 @@ iOS ve Android için tek kod tabanlı (Expo / React Native), sade bir Pomodoro o
 ## Çalıştırma
 ```bash
 npm install
-npx expo start      # telefonda Expo Go ile QR kodu okutun
+npx expo start --go   # telefonda Expo Go ile QR kodu okutun
 ```
+Geliştirme sürümü (`development` profili) telefona kuruluysa `--go` olmadan `npx expo start` kullanın.
 
 ## Mağazalara yayınlama (EAS)
+Derleme ve gönderim Expo'nun bulut servisi EAS ile yapılır; Mac, Xcode veya Android Studio gerekmez. Ayarlar `eas.json` içindedir.
+
+| Profil | Ne için | Çıktı |
+|---|---|---|
+| `development` | Geliştirme sürümü (bildirimler, açılış ekranı gibi Expo Go'da olmayan şeyleri denemek) | Dahili dağıtım |
+| `preview` | Arkadaşlara/test edenlere dağıtmak | Android: doğrudan kurulabilen `.apk`, iOS: dahili dağıtım |
+| `production` | Mağazalar | Android: `.aab`, iOS: `.ipa`; derleme numarası otomatik artar |
+
+### Bir kerelik hazırlık
+1. **Hesaplar:** [expo.dev](https://expo.dev) (ücretsiz), Apple Developer Program (yıllık 99 $), Google Play Console (tek seferlik 25 $).
+2. **Projeyi EAS'a bağla** (`app.json` içine `owner` ve `extra.eas.projectId` ekler; değişikliği commit edin):
+   ```bash
+   npx eas-cli@latest login
+   npx eas-cli@latest init
+   ```
+3. **Paket kimliği:** `app.json` içinde `com.hako54.pomodoro` kullanılıyor. Mağazaya ilk yüklemeden sonra değiştirilemez; farklı bir kimlik istiyorsanız şimdi değiştirin.
+
+### Test sürümü
 ```bash
-npx eas-cli@latest login
-npx eas-cli@latest build --platform all
-npx eas-cli@latest submit --platform all
+npx eas-cli@latest build --profile preview --platform android   # telefona kurulabilen APK bağlantısı verir
+npx eas-cli@latest build --profile preview --platform ios        # iPhone'unuzu önce kaydettirmenizi ister
 ```
-Gerekenler: Apple Developer hesabı (yıllık 99 $) ve Google Play Console hesabı (tek seferlik 25 $).
+
+### Mağaza sürümü
+```bash
+npx eas-cli@latest build --profile production --platform all
+```
+İlk iOS derlemesinde EAS, Apple hesabınızla giriş yapıp imzalama sertifikalarını sizin için oluşturur.
+
+### Gönderim
+- **iOS:** `npx eas-cli@latest submit --platform ios --latest` — uygulamayı App Store Connect'te oluşturur ve TestFlight'a yükler. İnceleme için gönderme, metinler ve ekran görüntüleri App Store Connect'ten yapılır (`store/` klasörü).
+- **Android:** Google, bir uygulamanın **ilk** `.aab` dosyasının Play Console'a elle yüklenmesini ister. Sonraki sürümler için:
+  1. Play Console'da bir servis hesabı anahtarı (JSON) oluşturun ve proje köküne `google-service-account.json` adıyla koyun (git'e eklenmez).
+  2. `npx eas-cli@latest submit --platform android --latest` — sürümü **dahili test** kanalına **taslak** olarak yükler; yayına alma kararı Play Console'da sizde kalır.
 
 ## İkon ve açılış ekranı
 Tüm ikon/açılış görselleri `design/generate.py` ile SVG'den üretilir (renkleri ve şekli oradan değiştirebilirsiniz):
