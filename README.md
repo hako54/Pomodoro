@@ -24,3 +24,10 @@ npx eas-cli@latest build --platform all
 npx eas-cli@latest submit --platform all
 ```
 Gerekenler: Apple Developer hesabı (yıllık 99 $) ve Google Play Console hesabı (tek seferlik 25 $).
+
+## İkon ve açılış ekranı
+Tüm ikon/açılış görselleri `design/generate.py` ile SVG'den üretilir (renkleri ve şekli oradan değiştirebilirsiniz):
+```bash
+python3 design/generate.py   # Pillow ve Chromium gerekir
+```
+![Önizleme](design/preview.png)
