@@ -18,13 +18,13 @@ const SCREENS = [
 ];
 const COPY = {
   en: [
-    ['Focus in 25-minute sprints', 'The Pomodoro Technique, beautifully simple.'],
+    ['Focus in 25-minute sprints', 'The pomodoro method, beautifully simple.'],
     ['Take breaks that recharge you', 'Short and long breaks, timed for you.'],
     ['Make every timer yours', 'Adjust focus and break lengths in a tap.'],
     ['Track your daily progress', 'Watch your focus sessions add up.'],
   ],
   tr: [
-    ['25 dakikalık seanslarla odaklan', 'Pomodoro tekniği, sade ve şık.'],
+    ['25 dakikalık seanslarla odaklan', 'Pomodoro yöntemi, sade ve şık.'],
     ['Seni yenileyen molalar ver', 'Kısa ve uzun molalar senin için zamanlanır.'],
     ['Süreleri sana göre ayarla', 'Odak ve mola sürelerini tek dokunuşla değiştir.'],
     ['Günlük ilerlemeni takip et', 'Tamamladığın odak seanslarını gör.'],

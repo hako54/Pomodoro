@@ -50,3 +50,7 @@ node store/capture.mjs /tmp/raw     # ekranları yakalar
 node store/compose.mjs /tmp/raw     # başlık + cihaz çerçevesiyle birleştirir
 ```
 Başlık metinleri `store/compose.mjs` içindeki `COPY` bölümünden değiştirilebilir.
+
+## Mağaza metinleri ve gizlilik
+- Mağaza açıklamaları (ad, alt başlık, açıklama, anahtar kelimeler): [`store/listing/en.md`](store/listing/en.md), [`store/listing/tr.md`](store/listing/tr.md)
+- Gizlilik politikası: [`PRIVACY.md`](PRIVACY.md) — her iki mağaza da bir gizlilik politikası URL'si ister; bu dosyanın GitHub bağlantısı kullanılabilir (depo herkese açık olmalı).
