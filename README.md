@@ -83,3 +83,6 @@ Başlık metinleri `store/compose.mjs` içindeki `COPY` bölümünden değiştir
 ## Mağaza metinleri ve gizlilik
 - Mağaza açıklamaları (ad, alt başlık, açıklama, anahtar kelimeler): [`store/listing/en.md`](store/listing/en.md), [`store/listing/tr.md`](store/listing/tr.md)
 - Gizlilik politikası: [`PRIVACY.md`](PRIVACY.md) — her iki mağaza da bir gizlilik politikası URL'si ister; bu dosyanın GitHub bağlantısı kullanılabilir (depo herkese açık olmalı).
+
+---
+© 2026 hakko. Tüm hakları saklıdır.
